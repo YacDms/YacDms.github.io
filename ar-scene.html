@@ -7,10 +7,24 @@
   </head>
   <body style="margin: 0; overflow: hidden;">
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
-      <!-- Affiche l'image comme un plan 3D -->
-      <a-image src="IMAGE_URL" position="0 0 0" rotation="-90 0 0" width="1" height="1"></a-image>
+      <a-assets>
+        <img id="dynamicImage" />
+      </a-assets>
 
+      <a-image src="#dynamicImage" position="0 0 0" rotation="-90 0 0" width="1" height="1"></a-image>
       <a-marker-camera></a-marker-camera>
     </a-scene>
+
+    <script>
+      function getImageUrlFromQuery() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get("image");
+      }
+
+      const imageUrl = getImageUrlFromQuery();
+      if (imageUrl) {
+        document.getElementById("dynamicImage").setAttribute("src", imageUrl);
+      }
+    </script>
   </body>
 </html>
